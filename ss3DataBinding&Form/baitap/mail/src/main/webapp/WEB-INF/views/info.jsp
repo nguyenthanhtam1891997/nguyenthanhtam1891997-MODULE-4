@@ -8,9 +8,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>info</title>
 </head>
 <body>
-
+<h3>Languages: ${maiModel.language}</h3>
+<h3>Page Size: ${maiModel.fontSize}</h3>
+<h3>filter: ${maiModel.filter}</h3>
+<h3>Signature: ${maiModel.signature}</h3>
 </body>
 </html>

@@ -31,7 +31,7 @@
         </tr>
         <tr>
 
-            <td>Page Size</td>
+            <td>font Size</td>
             <td>Show</td>
             <td>
                 <form:select path="fontSize">
@@ -46,7 +46,7 @@
             <td colspan="2">emails per page</td>
         </tr>
         <tr>
-            <td>Page Size</td>
+            <td>filter</td>
             <td><form:checkbox path="filter" value="1"></form:checkbox></td>
             <td colspan="3">Enable spams filter</td>
 
