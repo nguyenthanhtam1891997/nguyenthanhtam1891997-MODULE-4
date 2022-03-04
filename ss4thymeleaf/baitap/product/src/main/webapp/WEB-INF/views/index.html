@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p><a th:href="@{/Product/creat}">Add new product</a></p>
+
+<div th:if="${messagett}">
+    <span th:text="${messagett}"></span>
+</div>
+<div><a th:href="@{/Product}">Home</a></div>
+<form th:action="@{/Product/search}"  method="get" novalidate = "novalidate">
+    <input type="text" name="search">
+    <input type="submit" value="search">
+</form>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Details</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>View</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${productList}">
+
+        <td><a th:href="@{/Product/view/__${item.id}__}"><span th:text="${item.nameProduct}"></span></a></td>
+        <td th:text="${item.description}"></td>
+        <td th:text="${item.details}"></td>
+        <td><a th:href="@{/Product/edit/__${item.id}__}">Edit</a></td>
+        <td><a th:href="@{/Product/delete/__${item.id}__}">Delete</a></td>
+        <td><a th:href="@{/Product/view/__${item.id}__}">view</a></td>
+    </tr>
+
+    </tbody>
+</table>
+
+
+</body>
+</html>

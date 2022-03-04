@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p><a th:href="@{/Product}">Back to list</a></p>
+<form th:action="@{/Product/delete}" th:object="${product}" method="post" novalidate ="novalidate">
+    <input type="hidden" th:field="*{id}">
+    <div>
+        <laber>Name</laber>
+        <input type="text" th:field="*{nameProduct}">
+    </div>
+    <div>
+        <laber>Description</laber>
+        <input type="text" th:field="*{description}">
+    </div>
+    <div>
+        <laber>Details</laber>
+        <input type="text" th:field="*{details}">
+    </div>
+    <input type="submit" value="delete">
+</form>
+</body>
+</html>

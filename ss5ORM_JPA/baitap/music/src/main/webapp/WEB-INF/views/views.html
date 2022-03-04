@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>views</title>
+</head>
+<body>
+<p><a th:href="@{/music}">Back to list</a></p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name Music</th>
+        <th>Name Singer</th>
+        <th>Link</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr >
+        <td th:text="${music.nameMusic}"></td>
+        <td th:text="${music.nameSinger}"></td>
+        <td th:text="${music.linkMusic}"></td>
+    </tr>
+
+    </tbody>
+</table>
+</body>
+</html>
