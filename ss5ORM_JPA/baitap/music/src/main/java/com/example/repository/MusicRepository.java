@@ -115,7 +115,7 @@ public class MusicRepository implements IMusicRepository {
             session = ConnectionUtil.sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.remove(music);
-            
+
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
