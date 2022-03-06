@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p><a th:href="@{/customer}">Back to list</a></p>
+<div th:if="${message}">
+    <span th:text="${message}"></span>
+</div>
+<div><a th:href="@{/customer/creat}">Creat new customer</a></div>
+<table class="table">
+    <thead>
+    <tr>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>Views</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item :${customerList}">
+        <td th:text="${item.firstName}"></td>
+        <td th:text="${item.lastName}"></td>
+        <td><a th:href="@{/customer/edit/__${item.id}__}">Edit</a></td>
+        <td><a th:href="@{/customer/delete/__${item.id}__}">Delete</a></td>
+        <td><a th:href="@{/customer/views/__${item.id}__}">Views</a></td>
+
+    </tr>
+
+    </tbody>
+</table>
+<form th:object="${customer}" method="post" th:action="@{/customer/save}">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr>
+            <input type="hidden" th:field="*{id}">
+            <td><input type="text" th:field="*{firstName}"></td>
+            <td><input type="text" th:field="*{lastName}"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Creat"></td>
+        </tr>
+        </tbody>
+
+    </table>
+
+</form>
+
+</body>
+</html>
