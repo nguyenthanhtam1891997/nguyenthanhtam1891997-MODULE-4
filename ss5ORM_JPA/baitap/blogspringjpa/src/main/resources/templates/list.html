@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p><a th:href="@{/blog}">Back to list</a></p>
+
+<div th:if="${message}">
+    <span th:text="${message}"></span>
+</div>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name Bolg</th>
+        <th>Content</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>Views</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${blogList}">
+
+        <td th:text="${item.nameBlog}"></td>
+        <td th:text="${item.content}"></td>
+        <td><a th:href="@{/blog/edit/__${item.id}__}">Edit</a></td>
+        <td><a th:href="@{/blog/delete/__${item.id}__}">Delete</a></td>
+        <td><a th:href="@{/blog/views/__${item.id}__}">Views</a></td>
+    </tr>
+
+    </tbody>
+</table>
+<form th:object="${blog}" th:action="@{/blog/save}" method="post">
+    <table class="table">
+
+        <tr>
+            <th>Name blog</th>
+            <th>Content</th>
+            <th>Abbreviate</th>
+        </tr>
+
+
+        <tr>
+            <input type="hidden" th:field="*{id}">
+            <td><input type="text" th:field="*{nameBlog}"></td>
+            <td><input type="text" th:field="*{content}"></td>
+            <td><textarea th:field="*{abbreviate}"/></td>
+
+        </tr>
+        <tr>
+            <td><input type="submit" value="save"></td>
+        </tr>
+
+
+    </table>
+    
+</form>
+
+
+</body>
+</html>

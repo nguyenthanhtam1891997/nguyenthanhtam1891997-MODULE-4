@@ -61,4 +61,9 @@ public class CustomerController {
         redirectAttributes.addFlashAttribute("message","delete ok");
         return "redirect:/customer";
     }
+    @GetMapping("/views/{id}")
+    public String views(@PathVariable int id,Model model){
+        model.addAttribute("customer",customerService.findById(id));
+        return "views";
+    }
 }

@@ -23,8 +23,9 @@ public class CustomerService implements ICustomerService {
 
     @Override
     @Transactional
-    public Optional<Customer> findById(int id) {
-        return customerRepository.findById(id);
+    public Customer findById(int id) {
+
+        return customerRepository.findById(id).get();
     }
 
     @Override

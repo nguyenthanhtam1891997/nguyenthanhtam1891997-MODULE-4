@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface ICustomerService  {
     List<Customer> findAll();
-    Optional<Customer> findById(int id);
+   Customer findById(int id);
     void save (Customer customer);
     void remove(int id);
 
