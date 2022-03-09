@@ -16,5 +16,9 @@ public interface IBlogService {
     Page<Blog> findByNameBlogContaining(String name, Pageable pageable);
 
     Blog findById(int id);
+
     void remove(int id);
+
+    Page<Blog> findByCategoryId(int id,Pageable pageable);
+    void update(Blog blog);
 }

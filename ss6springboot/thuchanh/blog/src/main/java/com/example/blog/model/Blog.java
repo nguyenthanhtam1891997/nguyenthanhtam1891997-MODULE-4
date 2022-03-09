@@ -1,6 +1,9 @@
 package com.example.blog.model;
 
+import org.springframework.data.annotation.CreatedDate;
+
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -13,16 +16,29 @@ public class Blog {
     private String nameBlog;
     private String content;
     private String description;
-    private Date dayValue;
+    private LocalDate dayValue;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id",referencedColumnName = "id")
+    private Category category;
 
     public Blog() {
     }
 
-    public Blog(String nameBlog, String content, String description, Date dayValue) {
+    public Blog(String nameBlog, String content, String description, LocalDate dayValue, Category category) {
         this.nameBlog = nameBlog;
         this.content = content;
         this.description = description;
         this.dayValue = dayValue;
+        this.category = category;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public int getId() {
@@ -57,11 +73,11 @@ public class Blog {
         this.description = description;
     }
 
-    public Date getDayValue() {
+    public LocalDate getDayValue() {
         return dayValue;
     }
 
-    public void setDayValue(Date dayValue) {
+    public void setDayValue(LocalDate dayValue) {
         this.dayValue = dayValue;
     }
 }

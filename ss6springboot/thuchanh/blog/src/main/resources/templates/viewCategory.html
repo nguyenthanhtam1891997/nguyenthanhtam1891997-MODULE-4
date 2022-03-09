@@ -7,29 +7,16 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
-<style>
-    .box{
-        border: 1px solid;
-        background-color: #219727;
-        display: flex;
-        margin-left: 10%;
-        margin-right: 15%;
-        margin-bottom: 20px;
-    }
-   .box a{
-        padding-left: 10px;
-    }
 
-
-
-</style>
 
 
 </head>
 <body>
+<h1 th:text="${category.nameCategory}"></h1>
 <h3>List blog</h3>
 <a th:href="@{/blog/creat}">Add new blog</a>
-<a th:href="@{/category}">Back to category list </a>
+<a th:href="@{/category}">Back to category list</a>
+<!--<a th:href="@{/blog/creat-category}">Add category</a>-->
 <p th:if="${message}">
     <span th:text="${message}"></span>
 </p>
@@ -62,17 +49,7 @@
     </tbody>
 </table>
 
-<!--<div class="row">-->
-<!--    <div th:each="item : ${blogList}" class="col-4">-->
-<!--        <div class="box">-->
-<!--            <div></div>-->
-<!--            <p th:text="${item.nameBlog}"> </p>-->
-<!--            <a th:href="@{/blog/edit/__${item.id}__}"><i class="fas fa-edit"></i></a>-->
-<!--            <a th:href="@{/blog/edit/__${item.id}__}"><i class="fas fa-edit"></i></a>-->
-<!--            <a th:href="@{/blog/edit/__${item.id}__}"><i class="fas fa-edit"></i></a>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+
 
 
 <div>

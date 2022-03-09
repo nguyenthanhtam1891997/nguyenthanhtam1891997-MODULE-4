@@ -25,6 +25,14 @@
             <td><textarea th:field="*{description}"/></td>
         </tr>
         <tr>
+            <td>Category</td>
+            <td>
+                <select th:field="*{category.id}">
+                    <option th:each="item : ${categoryList}" th:text="${item.nameCategory}" th:value="${item.id}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
             <td></td>
             <td><input type="submit" value="creat"></td>
         </tr>

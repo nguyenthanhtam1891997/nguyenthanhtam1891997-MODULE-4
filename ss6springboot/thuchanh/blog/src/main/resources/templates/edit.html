@@ -9,8 +9,11 @@
     <table class="table">
 
         <tbody>
-        <tr>
 
+        <tr>
+            <input type="hidden" th:field="*{id}">
+            <input type="hidden" th:field="*{dayValue}">
+            <input type="hidden" th:field="*{category.id}">
             <td>Name Blog</td>
             <td><input type="text" th:field="*{nameBlog}"></td>
         </tr>
