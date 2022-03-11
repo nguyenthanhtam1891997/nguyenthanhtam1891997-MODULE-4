@@ -82,5 +82,39 @@
 
 </div>
 
+
+
+<!--<div class="container" th:if="${userList != null}">-->
+
+<!--    <div class="row">-->
+<!--        <div class="col-sm-4 p-2" th:each="item : ${userList}">-->
+<!--            <div style="background: #d2cbcb">-->
+<!--                <div class="d-flex justify-content-around">-->
+<!--                    <a th:href="@{/user/edit/__${item.id}__}"><i class='far fa-edit'></i></a>-->
+<!--                    <h3 th:text="${item.lastName}"></h3>-->
+<!--                    <a th:href="@{/user/delete/__${item.id}__}" style="color: red">X</a>-->
+<!--                </div>-->
+<!--                <div class="d-flex justify-content-center">-->
+<!--                    <a th:href="@{/user/view/__${item.id}__}" style="color: darkblue">View</a>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--        </div>-->
+<!--        <div class="col-12">-->
+<!--            &lt;!&ndash;            <div >&ndash;&gt;-->
+<!--            &lt;!&ndash;                <a th:href="@{'/user'(page = ${userList.number - 1})}" th:if="${userList.hasPrevious()}">[<<]pre</a>&ndash;&gt;-->
+<!--            &lt;!&ndash;                <span th:text="${userList.number +1}"></span>/<span th:text="${userList.totalPages}"></span>&ndash;&gt;-->
+<!--            &lt;!&ndash;                <a th:href="@{'/user'(page= ${userList.number + 1})}" th:if="${userList.hasNext()}">[>>]nex</a>&ndash;&gt;-->
+<!--            &lt;!&ndash;            </div>&ndash;&gt;-->
+<!--            <div>-->
+<!--                <a th:href="@{'/user'(page = ${userList.number -1})}" th:if="${userList.hasPrevious()}">Previous</a>-->
+<!--                <span th:text="${userList.number + 1}"></span>/<span th:text="${userList.totalPages}"></span>-->
+<!--                <a th:href="@{'/user'(page = ${userList.number + 1})}" th:if="${userList.hasNext()}">NEX</a>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--    </div>-->
+<!--</div>-->
+
 </body>
 </html>
