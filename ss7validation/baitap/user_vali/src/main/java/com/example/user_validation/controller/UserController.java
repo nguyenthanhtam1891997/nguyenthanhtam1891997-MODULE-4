@@ -32,11 +32,11 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public String save(@Valid @ModelAttribute UserDto userDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String save(@Valid @ModelAttribute UserDto userDto, BindingResult bindingResult, RedirectAttributes redirectAttributes,@PageableDefault(value = 3, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,Model model) {
         new UserDto().validate(userDto, bindingResult);
         if (bindingResult.hasFieldErrors()) {
-
-            return "/input";
+            model.addAttribute("userList", userService.findAll(pageable));
+            return "input";
         } else {
             User user = new User();
             BeanUtils.copyProperties(userDto, user);
