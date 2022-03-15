@@ -4,13 +4,16 @@ import com.example.customerbank.model.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface ICustomerService {
-    Page<Customer> findAll(Pageable pageable);
+import java.util.List;
 
-    Customer findById(int id);
+public interface IGeneralService<T> {
+    Page<T> findAll(Pageable pageable);
 
-    void save(Customer customer);
+    T findById(int id);
+
+    void save(T t);
 
     void remove(int id);
+    List<T> findAll();
 
 }

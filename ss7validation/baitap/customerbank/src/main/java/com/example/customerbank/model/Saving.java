@@ -1,8 +1,6 @@
 package com.example.customerbank.model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.Set;
 
 @Entity
 @Table(name = "saving")
@@ -12,11 +10,14 @@ public class Saving {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private LocalDate dateSubmit;
+    private String dateSubmit;
     private String period;
-    private double money;
-    @OneToMany(mappedBy = "saving")
-    private Set<Customer> customers;
+    private Double money;
+
+
+   @ManyToOne
+   @JoinColumn(name = "customer_id",referencedColumnName = "id")
+    private Customer customer;
 
     public int getId() {
         return id;
@@ -26,11 +27,11 @@ public class Saving {
         this.id = id;
     }
 
-    public LocalDate getDateSubmit() {
+    public String getDateSubmit() {
         return dateSubmit;
     }
 
-    public void setDateSubmit(LocalDate dateSubmit) {
+    public void setDateSubmit(String dateSubmit) {
         this.dateSubmit = dateSubmit;
     }
 
@@ -42,19 +43,19 @@ public class Saving {
         this.period = period;
     }
 
-    public double getMoney() {
+    public Double getMoney() {
         return money;
     }
 
-    public void setMoney(double money) {
+    public void setMoney(Double money) {
         this.money = money;
     }
 
-    public Set<Customer> getCustomers() {
-        return customers;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomers(Set<Customer> customers) {
-        this.customers = customers;
+    public void setCustomer(Customer customers) {
+        this.customer = customers;
     }
 }

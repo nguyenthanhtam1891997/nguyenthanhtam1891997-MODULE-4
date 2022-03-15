@@ -1,6 +1,7 @@
 package com.example.customerbank.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "customer")
@@ -11,18 +12,18 @@ public class Customer {
     private int id;
 
     private String name;
-    @ManyToOne
-    @JoinColumn(name = "saning_id",referencedColumnName = "id")
-    private Saving saving;
+
+    @OneToMany(mappedBy = "customer")
+    private Set<Saving> saving;
 
     public Customer() {
     }
 
-    public Saving getSaving() {
+    public Set<Saving> getSaving() {
         return saving;
     }
 
-    public void setSaving(Saving saving) {
+    public void setSaving(Set<Saving> saving) {
         this.saving = saving;
     }
 

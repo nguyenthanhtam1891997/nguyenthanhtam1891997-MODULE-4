@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID Customer</th>
+        <th>Name Customer</th>
+        <th>Day Saving</th>
+        <th>Period</th>
+        <th>money</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item:${savingList}">
+
+        <td th:text="${item.customer.id}"></td>
+        <td th:text="${item.customer.name}"></td>
+        <td th:text="${item.dateSubmit}"></td>
+        <td th:text="${item.period}"></td>
+        <td th:text="${item.money}"></td>
+        <td>
+            <a th:href="@{/bank/edit/__${item.id}__}">Edit</a>
+            <a th:href="@{/bank/delete/__${item.id}__}">Delete</a>
+            <a th:href="@{/bank/view/__${item.id}__}">View</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p>Tạo sổ tiết kiệm</p>
+<h3 th:text="${message}"></h3>
+<form th:object="${saving}" th:action="@{/bank/creat}" method="post">
+    <table class="table">
+        <input type="hidden" th:field="*{id}">
+
+        <tbody>
+        <tr>
+            <td>Name Customer:</td>
+            <td><input type="text" th:field="*{customer.name}"></td>
+            <td>
+                <select th:field="*{customer.name}">
+                    <option th:each="item:${customerList}" th:value="${item.name}" th:text="${item.name}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Period:</td>
+            <td><input type="text" th:field="*{period}"></td>
+        </tr>
+        <tr>
+            <td>Money Saving</td>
+            <td><input type="text" th:field="*{money}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <button type="submit">gởi tiết kiệm</button>
+</form>
+
+
+</body>
+</html>
