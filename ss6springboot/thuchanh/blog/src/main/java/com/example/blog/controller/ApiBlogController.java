@@ -59,44 +59,63 @@ public class ApiBlogController {
     }
 
     @PostMapping(value = "/creat/blog", produces = "application/json")
-    public ResponseEntity addBlog(@RequestBody Blog blog) {
-//        Category category = categoryService.findById(id);
-        blog.setDayValue(java.time.LocalDate.now());
-        blog.setCategory(categoryService.findById(blog.getCategory().getId()));
-        blogService.save(blog);
-//        Blog blog = new Blog();
-//        blog.setCategory(blogDto.getCategory());
-//        BeanUtils.copyProperties(blogDto,blog);
-//        blogService.save(blog);
-//        Blog blog = new Blog();
-//        BeanUtils.copyProperties(blogDto, blog);
-//        blog.setCategory().setId(blogDto.getCategory());
-//        blog.setDayValue(java.time.LocalDate.now());
-//        blogService.save(blog);
-        return new ResponseEntity(HttpStatus.OK);
+    public ResponseEntity addBlog(@RequestBody BlogDto blogDto) {
+        if (categoryService.findById(blogDto.getCategory()) == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        } else {
+            Blog blog = new Blog();
+            BeanUtils.copyProperties(blogDto, blog);
+            blog.setCategory(categoryService.findById(blogDto.getCategory()));
+//            blog.getCategory().setId(blogDto.getCategory());
+            blog.setDayValue(java.time.LocalDate.now());
+            blogService.save(blog);
+            return new ResponseEntity(HttpStatus.OK);
+        }
+
 
     }
 
 
-    @PutMapping("/{id}")
+    @PutMapping("/category/{id}")
     public ResponseEntity<Category> updateCategory(@PathVariable int id, @RequestBody Category category) {
         Category currentCategory = categoryService.findById(id);
         if (currentCategory == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            currentCategory.setId(id);
+            BeanUtils.copyProperties(category, currentCategory);
             currentCategory.setBlogs(category.getBlogs());
             categoryService.save(currentCategory);
             return new ResponseEntity<>(currentCategory, HttpStatus.OK);
         }
-//        currentCategory.setNameCategory(category.getNameCategory());
-
-//        Set<Blog> blogs = currentCategory.getBlogs();
-//        for (Blog item : blogs) {
-//            item.setDayValue(java.time.LocalDate.now());
-//        }
-
-
     }
 
+    //    @PatchMapping("/category/{id}")
+//    public ResponseEntity<Category> updateCategory2(@PathVariable int id,@RequestBody Category category){
+//        Category currentCategory = categoryService.findById(id);
+//        if (currentCategory == null){
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }else {
+//            BeanUtils.copyProperties(category,currentCategory);
+//            categoryService.save(category);
+//            return new ResponseEntity<>(category,HttpStatus.OK);
+//        }
+//    }
+    @DeleteMapping("/category/{id}")
+    public ResponseEntity<Category> deleteCategory(@PathVariable int id) {
+        if (categoryService.findById(id) == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            categoryService.remove(id);
+            return new ResponseEntity<>(categoryService.findById(id), HttpStatus.NO_CONTENT);
+        }
+    }
+    @DeleteMapping("/blog/{id}")
+    public ResponseEntity deleteBlog(@PathVariable int id){
+        if (blogService.findById(id)==null){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }else {
+            blogService.remove(id);
+            return new ResponseEntity(HttpStatus.OK);
+        }
+    }
 }

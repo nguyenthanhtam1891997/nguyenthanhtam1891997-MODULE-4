@@ -24,8 +24,8 @@ public class Category {
 
 //    @JsonBackReference
 //    @JsonManagedReference
-    @OneToMany(mappedBy = "category" ,cascade = CascadeType.ALL)
-//    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
+    @OneToMany(mappedBy = "category")
+    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     private Set<Blog> blogs;
 
     public Category() {

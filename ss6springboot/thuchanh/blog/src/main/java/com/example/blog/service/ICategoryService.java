@@ -18,4 +18,5 @@ public interface ICategoryService {
     Category findById(int id);
 
     void remove(int id);
+    void  update(Category category,int id);
 }

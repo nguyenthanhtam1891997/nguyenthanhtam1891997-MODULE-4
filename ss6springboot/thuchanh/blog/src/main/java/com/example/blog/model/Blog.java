@@ -11,10 +11,10 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id"
-)
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id"
+//)
 
 
 @Entity
@@ -29,10 +29,12 @@ public class Blog {
     private String description;
     private LocalDate dayValue;
 
-    //        @JsonBackReference
+    @JsonBackReference
 //    @JsonManagedReference
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
+//    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
+
     private Category category;
 
     public Blog() {
