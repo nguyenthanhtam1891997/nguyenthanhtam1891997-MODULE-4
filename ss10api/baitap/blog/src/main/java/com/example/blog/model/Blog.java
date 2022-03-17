@@ -5,18 +5,13 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.Cascade;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
-
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id"
 )
-
-
 @Entity
 @Table(name = "blog_tex")
 public class Blog {
@@ -29,10 +24,10 @@ public class Blog {
     private String description;
     private LocalDate dayValue;
 
-    //        @JsonBackReference
-//    @JsonManagedReference
-    @ManyToOne(cascade = CascadeType.ALL)
+//    @JsonBackReference
+    @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Category category;
 
     public Blog() {

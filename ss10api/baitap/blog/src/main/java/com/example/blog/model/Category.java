@@ -8,7 +8,6 @@ import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.Set;
-
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id"
@@ -22,10 +21,9 @@ public class Category {
 
     private String nameCategory;
 
-//    @JsonBackReference
+    @OneToMany(mappedBy = "category")
 //    @JsonManagedReference
-    @OneToMany(mappedBy = "category" ,cascade = CascadeType.ALL)
-//    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
+    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     private Set<Blog> blogs;
 
     public Category() {
