@@ -1,6 +1,7 @@
-package com.example.blog.service;
+package com.example.service;
 
-import com.example.blog.model.Blog;
+
+import com.example.model.Blog;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -24,4 +25,8 @@ public interface IBlogService {
     void update(Blog blog);
 
     List<Blog> findByCategoryId(int id);
+
+    List<Blog> findByNameBlogContaining(String nameBlog);
+
+
 }

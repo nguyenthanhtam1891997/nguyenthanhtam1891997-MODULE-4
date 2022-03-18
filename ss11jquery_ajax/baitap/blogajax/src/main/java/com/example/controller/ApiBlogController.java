@@ -1,11 +1,11 @@
-package com.example.blog.controller;
+package com.example.controller;
 
-import com.example.blog.dto.BlogDto;
-import com.example.blog.model.Blog;
-import com.example.blog.model.Category;
-import com.example.blog.service.IBlogService;
-import com.example.blog.service.ICategoryService;
-import com.fasterxml.jackson.databind.util.BeanUtil;
+
+import com.example.dto.BlogDto;
+import com.example.model.Blog;
+import com.example.model.Category;
+import com.example.service.IBlogService;
+import com.example.service.ICategoryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin("*")
 public class ApiBlogController {
     @Autowired
     private IBlogService blogService;
@@ -42,8 +42,18 @@ public class ApiBlogController {
         }
         return new ResponseEntity<>(blogList, HttpStatus.OK);
     }
+    @GetMapping("/blog/search")
+    public ResponseEntity<List<Blog>> searchBlog(@RequestParam String nameBlog){
+        List<Blog> blogList = blogService.findByNameBlogContaining(nameBlog);
+        if (blogList.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }else {
+            return new ResponseEntity<>(blogList,HttpStatus.OK);
+        }
+    }
 
-    @GetMapping("/blog/{id}")
+
+    @GetMapping("/blog/idCategory/{id}")
     public ResponseEntity<List<Blog>> getBlogByIdCategory(@PathVariable int id) {
         List<Blog> blogList = blogService.findByCategoryId(id);
         if (blogList.isEmpty()) {
@@ -59,17 +69,17 @@ public class ApiBlogController {
     }
 
     @PostMapping(value = "/creat/blog", produces = "application/json")
-    public ResponseEntity addBlog(@RequestBody BlogDto blogDto) {
+    public ResponseEntity<List<Blog>> addBlog(@RequestBody BlogDto blogDto) {
         if (categoryService.findById(blogDto.getCategory()) == null) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             Blog blog = new Blog();
             BeanUtils.copyProperties(blogDto, blog);
             blog.setCategory(categoryService.findById(blogDto.getCategory()));
 //            blog.getCategory().setId(blogDto.getCategory());
-            blog.setDayValue(java.time.LocalDate.now());
+            blog.setDayValue(String.valueOf(java.time.LocalDateTime.now()));
             blogService.save(blog);
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity<>(blogService.findAll(),HttpStatus.OK);
         }
 
 

@@ -24,7 +24,7 @@
         </tr>
         <tr>
             <td></td>
-            <td><input type="submit" value="Add" onclick="addNewPhone()" id="addPhone"></td>
+            <td><input type="submit" value="Add" id="addPhone"></td>
         </tr>
     </table>
 </form>
@@ -139,7 +139,10 @@
         })
         $("#deletePhone").click(function () {
             let idPhone = $("#idPhone").val();
-            console.log(idPhone);
+            let check = "#deleteId"+idPhone;
+
+            let deleteButton = $(check);
+
             $.ajax({
                 headers: {
                     'Accept': 'application/json',
@@ -150,7 +153,13 @@
                 dataType: "json",
                 // contentType: "application/jason;charset=UTF-8",
                 success: function () {
-                    location.reload();
+                    // location.reload();
+                    $("#modelId").modal('toggle');
+                    console.log(deleteButton.val())
+                   deleteButton.parent().parent().remove();
+
+
+
                 }
             })
         })
@@ -210,7 +219,7 @@
                     tr.push("<td>" + data[i].producer + "</td>");
                     tr.push("<td>" + data[i].model + "</td>");
                     tr.push("<td>" + data[i].price + "</td>");
-                    tr.push(`<td><a onclick="getId(${data[i].id},\`${data[i].producer}\`)" data-toggle="modal" data-target="#modelId">delete</a></td>`);
+                    tr.push(`<td><button value="1"  onclick="getId(${data[i].id},\`${data[i].producer}\`)" data-toggle="modal" data-target="#modelId" id="deleteId${data[i].id}">delete</button></td>`);
                     tr.push(`<td><a onclick="getData('${data[i].id}','${data[i].producer}','${data[i].model}','${data[i].price}')" data-toggle="modal" data-target="#modelId2">edit</a></td>`);
                     tr.push("</tr>")
                     // ,${data[i].producer}
@@ -223,7 +232,8 @@
     }
 
     function getId(idPhone, namePhone) {
-
+        console.log($(this).attr("id","deleteId"+idPhone));
+        console.log($(this).attr("id"));
         console.log(idPhone);
         console.log(namePhone);
         $("#namePhone").text(namePhone);

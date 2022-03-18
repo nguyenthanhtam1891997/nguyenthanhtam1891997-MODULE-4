@@ -1,8 +1,6 @@
-package com.example.blog.model;
+package com.example.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.Cascade;
 
@@ -22,7 +20,7 @@ public class Category {
 
     private String nameCategory;
 
-    //    @JsonBackReference
+//    @JsonBackReference
 //    @JsonManagedReference
     @OneToMany(mappedBy = "category")
     @Cascade(value = org.hibernate.annotations.CascadeType.ALL)

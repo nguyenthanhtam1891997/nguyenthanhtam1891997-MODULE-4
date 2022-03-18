@@ -1,7 +1,8 @@
-package com.example.blog.service;
+package com.example.service;
 
-import com.example.blog.model.Blog;
-import com.example.blog.repository.IBlogRepository;
+
+import com.example.model.Blog;
+import com.example.repository.IBlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -59,6 +60,13 @@ public class BlogService implements IBlogService {
     public List<Blog> findByCategoryId(int id) {
         return blogRepository.findByCategoryId(id);
     }
+
+    @Override
+    public List<Blog> findByNameBlogContaining(String nameBlog) {
+        return blogRepository.findByNameBlogContaining(nameBlog);
+    }
+
+
 
 
 }

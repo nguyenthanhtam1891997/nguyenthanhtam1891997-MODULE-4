@@ -1,15 +1,8 @@
-package com.example.blog.model;
+package com.example.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import org.hibernate.annotations.Cascade;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.Date;
 
 //@JsonIdentityInfo(
 //        generator = ObjectIdGenerators.PropertyGenerator.class,
@@ -26,8 +19,10 @@ public class Blog {
 
     private String nameBlog;
     private String content;
+
+    @Column(columnDefinition ="LONGTEXT")
     private String description;
-    private LocalDate dayValue;
+    private String dayValue;
 
     @JsonBackReference
 //    @JsonManagedReference
@@ -40,7 +35,7 @@ public class Blog {
     public Blog() {
     }
 
-    public Blog(String nameBlog, String content, String description, LocalDate dayValue, Category category) {
+    public Blog(String nameBlog, String content, String description, String dayValue, Category category) {
         this.nameBlog = nameBlog;
         this.content = content;
         this.description = description;
@@ -88,11 +83,11 @@ public class Blog {
         this.description = description;
     }
 
-    public LocalDate getDayValue() {
+    public String getDayValue() {
         return dayValue;
     }
 
-    public void setDayValue(LocalDate dayValue) {
+    public void setDayValue(String dayValue) {
         this.dayValue = dayValue;
     }
 }
