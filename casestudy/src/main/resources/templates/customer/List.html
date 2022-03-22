@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+<h3>list Customer</h3>
+<div class="d-flex justify-content-between">
+    <div><a th:href="@{/customer/add}" class="btn btn-primary  rounded-pill">Add new customer</a></div>
+    <div><a th:href="@{/customer}" class="btn btn-primary rounded-pill">Back to list</a></div>
+    <div>
+        <form th:action="@{/customer/search}" method="get" class="form-inline">
+
+            <input type="text"
+                   class="form-control mr-sm-2" name="nameCustomer" aria-describedby="helpId"
+                   placeholder="Search By Name">
+
+            <button type="submit" class="btn btn-outline-success my-2 my-sm-0 rounded-pill">Search</button>
+        </form>
+    </div>
+</div>
+<h3 th:if="${message}" th:text="${message}"></h3>
+<div class="container p-2">
+    <div class="row">
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th>Name Customer</th>
+                <th>Birth Day</th>
+                <th>Gen Der</th>
+                <th>Id Card</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Type Customer</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item:${customerList}" class="col-md-1">
+                <td th:text="${item.name}"></td>
+                <td th:text="${item.birthday}"></td>
+                <td th:switch="${item.gender}">
+                    <span th:case="0">Female</span>
+                    <span th:case="1">Male</span>
+                    <span th:case="*">LGBT</span>
+                </td>
+                <td th:text="${item.idCard}"></td>
+                <td th:text="${item.customerPhone}"></td>
+                <td th:text="${item.address}"></td>
+                <td th:text="${item.email}"></td>
+                <td th:text="${item.customerType.customerTypeName}"></td>
+                <td>
+                    <a th:href="@{/customer/edit/__${item.id}__}" class="btn btn-primary">Edit</a>
+                </td>
+                <td>
+                    <button th:data-parameter1="${item.id}" th:data-parameter2="${item.name}"
+                            onclick="getValue(this.getAttribute('data-parameter1'),this.getAttribute('data-parameter2'))"
+                            data-toggle="modal" data-target="#modelId" class="btn btn-primary">Delete
+                    </button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary"
+                            data-toggle="modal" data-target="#modelId2"
+                            th:data-name="${item.name}"
+                            th:data-email="${item.email}"
+                            th:data-phone="${item.customerPhone}"
+                            th:data-card="${item.idCard}"
+                            th:data-birth="${item.birthday}"
+                            onclick="viewCustomer(this.getAttribute('data-name'),this.getAttribute('data-email')
+                    ,this.getAttribute('data-phone'),this.getAttribute('data-card'),this.getAttribute('data-birth'))">
+                        View
+                    </button>
+                </td>
+                <td></td>
+                <!--            <a >Delete</a>-->
+
+                <!--            <a th:href="@{/customer/view/__${item.id}__}">View</a>-->
+
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h5 class="modal-title text-info">Delete Customer modal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body progress-bar progress-bar-striped">
+                <p>Bạn có muốn xóa <span id="nameCustomer"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a id="customerId" class="btn btn-primary">Yes</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade modal-second" id="modelId2" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h5 class="modal-title text-info">View Customer Modal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body progress-bar progress-bar-striped">
+                <div class="form-group">
+                    <label for="name" class="text-warning">Name Customer: </label>
+                    <input type="tex" class="form-control" name="" id="name" aria-describedby="emailHelpId">
+                </div>
+                <div class="form-group">
+                    <label for="email" class="text-warning">Email Customer: </label>
+                    <input type="tex" class="form-control" name="" id="email" aria-describedby="emailHelpId">
+                </div>
+                <div class="form-group">
+                    <label for="phone" class="text-warning">phone Customer: </label>
+                    <input type="tex" class="form-control" name="" id="phone" aria-describedby="emailHelpId">
+                </div>
+                <div class="form-group">
+                    <label for="card" class="text-warning">Name Customer: </label>
+                    <input type="tex" class="form-control" name="" id="card" aria-describedby="emailHelpId">
+                </div>
+                <div class="form-group">
+                    <label for="birth" class="text-warning">Birth Customer: </label>
+                    <input type="tex" class="form-control" name="" id="birth" aria-describedby="emailHelpId">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6"></div>
+        <div class="col-md-3">
+            <a th:href="@{'/customer'(page = ${customerList.number -1})}"
+               th:if="${customerList.hasPrevious()}" class="btn btn-primary rounded-pill">Previous</a>
+            <span th:text="${customerList.number + 1}"></span>/<span th:text="${customerList.totalPages}"></span>
+            <a th:href="@{'/customer'(page = ${customerList.number + 1})}" th:if="${customerList.hasNext()}"
+               class="btn btn-primary rounded-pill">NEX</a>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+    function getValue(id, name) {
+        console.log(id);
+        console.log(name)
+        document.getElementById("nameCustomer").innerText = name;
+        document.getElementById("customerId").href = "customer/delete/" + id;
+    }
+
+    function viewCustomer(name, email, phone, card, birth) {
+        console.log(name);
+        console.log(email);
+        console.log(phone);
+        console.log(card);
+        console.log(birth);
+        document.getElementById("name").value = name;
+        document.getElementById("email").value = email;
+        document.getElementById("phone").value = phone;
+        document.getElementById("card").value = card;
+        document.getElementById("birth").value = birth;
+
+    }
+
+</script>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="../static/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+
+<table class="table table-striped table-inverse table-responsive">
+    <thead class="thead-inverse">
+    <tr>
+        <th>ID</th>
+        <th>Name blog</th>
+        <th>Content</th>
+        <th>description</th>
+        <th>dayValue</th>
+    </tr>
+    </thead>
+    <tbody id="tableBody">
+    </tbody>
+</table>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <button type="button" class="btn btn-primary" id="cutList">Cut List</button>
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-primary" id="showList">Show list</button>
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-primary" id="backList">Back to list</button>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group d-flex">
+                <input type="text"
+                       class="form-control" name="" id="searchNameBlog" aria-describedby="helpId"
+                       placeholder="search by name blog">
+                <button type="button" class="btn btn-info" id="searchName">search</button>
+            </div>
+            <div class="form-group d-flex">
+
+                <label for="searchCategory"></label>
+                <select class="form-control" name="" id="searchCategory" placeholder="Search by category">
+
+                </select>
+                <button type="button" class="btn btn-info" id="searchId">search</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="nameBlog"></label>
+                <input type="text" name="" id="nameBlog" class="form-control" placeholder="Name Blog"
+                       aria-describedby="helpId">
+            </div>
+            <div class="form-group">
+                <label for="contentBlog"></label>
+                <input type="text" name="" id="contentBlog" class="form-control" placeholder="Content Blog"
+                       aria-describedby="helpId">
+            </div>
+            <div class="form-group">
+                <label for="descriptionBlog"></label>
+                <textarea name="" id="descriptionBlog" class="form-control" placeholder="Description Blog"
+                          aria-describedby="helpId"></textarea>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Choice Category</label>
+                </div>
+
+                <select class="custom-select" id="inputGroupSelect01">
+
+                </select>
+
+            </div>
+
+            <button name="" id="addNew" class="btn btn-primary" value="">ADD NEW BLOG</button>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+<!-- Button trigger modal -->
+<!--<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modelId">-->
+<!--    Launch-->
+<!--</button>-->
+
+<!-- Modal -->
+<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>bạn có muốn xóa <span id="dataName"></span></p>
+                <input type="hidden" id="dataId">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="yesDelete" >yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    let length = 3;
+    let value = [];
+
+    $(document).ready(function () {
+        getData();
+
+
+        $.ajax({
+            url: "http://localhost:8080/api/category",
+            type: "GET",
+            dataType: 'json',
+            contentType: 'application/json;charset = utf-8',
+            success: function (data) {
+                console.log(data);
+                let se = "";
+                // se += "<option selected>Choose...</option>";
+
+                for (let i = 0; i < data.length; i++) {
+                    se += `<option value=${data[i].id}> ${data[i].nameCategory} </option> `
+                }
+                console.log(se)
+                $('#inputGroupSelect01').html(se);
+                $('#searchCategory').html(se);
+            }
+        })
+
+
+        // let http = new XMLHttpRequest();
+        // http.open("GET", "http://localhost:8080/api/category");
+        // http.send();
+        // http.onreadystatechange = function () {
+        //     if (this.status == 200) {
+        //         ml(JSON.parse(this.responseText))
+        //     }
+        //
+        //     function ml(data) {
+        //         console.log(data);
+        //         let se = "";
+        //         se += "<option selected>Choose...</option>";
+        //
+        //         for (let i = 0; i < data.length; i++) {
+        //             se += `<option value=${data[i].id}> ${data[i].nameCategory} </option> `
+        //         }
+        //         $('#inputGroupSelect01').html(se);
+        //     }
+        // }
+        $('#addNew').click(function () {
+            let nameBlog = $('#nameBlog').val()
+            let contentBlog = $('#contentBlog').val()
+            let description = $('#descriptionBlog').val()
+            let category = $('#inputGroupSelect01').val()
+            let blog = {
+                nameBlog: nameBlog,
+                content: contentBlog,
+                description: description,
+                dayValue: category,
+                category: category,
+            }
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: "http://localhost:8080/api/creat/blog",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify(blog),
+                success: function (data) {
+                    // $('#tableBody').empty();
+                    console.log(data)
+                    value = data;
+                    location.reload();
+                    // let tr = "";
+                    // for (let i = 0; i < data.length; i++) {
+                    //     tr += "<tr>";
+                    //     tr += "<td>" + data[i].id + "</td>";
+                    //     tr += "<td>" + data[i].nameBlog + "</td>";
+                    //     tr += "<td>" + data[i].content + "</td>";
+                    //     tr += "<td>" + data[i].description + "</td>";
+                    //     tr += "<td>" + data[i].dayValue + "</td>";
+                    //     tr += "</tr>"
+                    // }
+                    // $('#tableBody').html(tr);
+                }
+            })
+
+        })
+        $('#showList').click(function () {
+            length = length + 3;
+            clickTex()
+        })
+        $('#cutList').click(function () {
+            length = length - 3;
+            clickTex()
+        })
+        $('#backList').click(function () {
+            length = 3
+            clickTex();
+        })
+        $('#searchName').click(function () {
+            let nameBlog = $('#searchNameBlog').val()
+            if (nameBlog != null) {
+                $.ajax({
+                    url: "http://localhost:8080/api/blog/search?nameBlog=" + nameBlog,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        let tr = ""
+                        for (let i = 0; i < data.length; i++) {
+                            tr += "<tr>";
+                            tr += "<td>" + data[i].id + "</td>";
+                            tr += "<td>" + data[i].nameBlog + "</td>";
+                            tr += "<td>" + data[i].content + "</td>";
+                            tr += "<td>" + data[i].description + "</td>";
+                            tr += "<td>" + data[i].dayValue + "</td>";
+                            tr += `<td><button type="button" class="btn btn-primary deleteBlog"data-toggle="modal" data-target="#modelId"
+                                onclick="deleteBlog('${value[i].id}','${value[i].nameBlog}')">Delete</button></td>`;
+                            tr += "</tr>"
+                        }
+                        $('#tableBody').html(tr);
+                    }
+                })
+            }
+
+        })
+        $('#searchId').click(function () {
+            let idCategory = $('#searchCategory').val();
+            if (idCategory != null) {
+                $.ajax({
+                    url: "http://localhost:8080/api/blog/idCategory/" + idCategory,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        let tr = ""
+                        for (let i = 0; i < data.length; i++) {
+                            tr += "<tr>";
+                            tr += "<td>" + data[i].id + "</td>";
+                            tr += "<td>" + data[i].nameBlog + "</td>";
+                            tr += "<td>" + data[i].content + "</td>";
+                            tr += "<td>" + data[i].description + "</td>";
+                            tr += "<td>" + data[i].dayValue + "</td>";
+                            tr += `<td><button type="button" class="btn btn-primary deleteBlog"data-toggle="modal" data-target="#modelId"
+                                onclick="deleteBlog('${data[i].id}','${data[i].nameBlog}')">Delete</button></td>`;
+                            tr += "</tr>"
+                        }
+                        $('#tableBody').html(tr);
+                    }
+                })
+            }
+
+        })
+        $('#yesDelete').click(function () {
+            let idDelete = $('#dataId').val();
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url:"http://localhost:8080/api/blog/"+idDelete,
+                type:"DELETE",
+                success:function () {
+                    console.log(123)
+                    $('#modelId').modal("toggle");
+                    $('.deleteBlog').parent().parent().remove();
+                    clickTex()
+                },
+                  error:function () {
+                      console.log(456)
+                  }
+
+
+            })
+        })
+
+    })
+
+    function getData() {
+        $('#tableBody').empty();
+        $.ajax({
+            url: "http://localhost:8080/api/blog",
+            type: "GET",
+            dataType: 'json',
+            contentType: 'application/json;charset = utf-8',
+            success: function (data) {
+                console.log(data)
+                value = data;
+                clickTex();
+                // let tr = "";
+                // for (let i = 0; i < data.length; i++) {
+                //     tr += "<tr>";
+                //     tr += "<td>" + data[i].id + "</td>";
+                //     tr += "<td>" + data[i].nameBlog + "</td>";
+                //     tr += "<td>" + data[i].content + "</td>";
+                //     tr += "<td>" + data[i].description + "</td>";
+                //     tr += "<td>" + data[i].dayValue + "</td>";
+                //     tr += "</tr>"
+                // }
+                // $('#tableBody').html(tr);
+                // var arr = data.map(function (printer) {
+                //     return `<tr>
+                //    <td>${data.id}</td>
+                //    <td> ${data.nameBlog} </td>
+                //    <td>${data.content} </td>
+                //    <td>${data.description} </td>
+                //    <td ${data.dayValue} </td>
+                //     </tr>`
+                // })
+                // console.log(arr)
+
+
+            }
+        })
+
+    }
+
+    function clickTex() {
+        if (length > value.length) {
+            length = value.length
+        }
+        if (length < 0) {
+            length = 0;
+        }
+        let tr = "";
+        if (length <= value.length) {
+            for (let i = 0; i < length; i++) {
+                tr += "<tr>";
+                tr += "<td>" + value[i].id + "</td>";
+                tr += "<td>" + value[i].nameBlog + "</td>";
+                tr += "<td>" + value[i].content + "</td>";
+                tr += "<td>" + value[i].description + "</td>";
+                tr += "<td>" + value[i].dayValue + "</td>";
+                tr += `<td><button type="button" class="btn btn-primary deleteBlog"data-toggle="modal" data-target="#modelId"
+                                onclick="deleteBlog('${value[i].id}','${value[i].nameBlog}')">Delete</button></td>`;
+                tr += "</tr>"
+            }
+            $('#tableBody').html(tr);
+        }
+
+    }
+function deleteBlog(idBlog,nameBlog){
+        console.log(idBlog);
+        console.log(nameBlog);
+        $('#dataName').text(nameBlog);
+        $('#dataId').val(idBlog);
+}
+
+    //     function topnews() {
+    //         var headlinesApi = "http://localhost:8080/api/blog";
+    //         fetch(headlinesApi)
+    //             .then(function (response) {
+    //                 return response.json();
+    //             })
+    //
+    //             .then(function (data) {
+    //                 var arr = data.map(function (printer) {
+    //                     return `<tr>
+    //        <td>${data.id}</td>
+    //        <td> ${data.nameBlog} </td>
+    //        <td>${data.content} </td>
+    //        <td>${data.description} </td>
+    //        <td ${data.dayValue} </td>
+    //         </tr>`
+    //                 })
+    //               var  print = arr.join("");
+    //                 console.log(print)
+    //             })
+    //     }
+    //
+    // topnews();
+</script>
+
+
+</body>
+</html>
